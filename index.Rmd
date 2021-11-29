@@ -1,0 +1,87 @@
+--- 
+title: "Exemplo de Análise de Dados para Avaliação"
+author: "Ronaldo Lima Jr"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  Exemplo da análise de dados que deve ser conduzida por cada aluno da disciplina Análise Quantitativa de Dados em Linguística como parte da avaliação.
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(DT)
+library(kableExtra)
+library(sjPlot)
+
+pb = read_csv("/Users/ronaldo/Dropbox/R/PPGL/2021/data/vogaisPB.csv")
+
+remapping = c(i = "i", u = "u", a = "a", o = "o", e = "e", E = "ɛ", O = "ɔ")
+pb$vogal = remapping[as.character(pb$vogal)] 
+
+pb %>% 
+  mutate_if(is.character, as.factor)
+```
+
+```{r, eval=FALSE}
+bookdown::render_book()
+```
+
+```{r eval=FALSE}
+bookdown::serve_book()
+```
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
+
+
+# Sobre a Análise de Dados
+
+A análise a ser apresentada é como se fosse a seção "Resultados" de um artigo no formato "Introdução", "Método", **"Resultados"**, "Discussão" e "Conclusão".
+
+A análise deve ser entregue em arquivo **PDF**.
+
+## Elementos obrigatórios na análise de dados:
+
+A análise deve conter:
+
+1. Breve explicação sobre os dados, com as perguntas de pesquisa e hipóteses (estritamente referentes às variáveis preditoras utilizadas na análise)
+2. EDA -- *Exploratory Data Analysis*
+    + Pelo menos uma imagem (gráfico) apresentando os dados
+    + Tabela com medidas de tendência central
+    + Breve descrição dessas medidas e tendências dos dados
+3. Análise estatística/inferencial dos dados
+    + Teste de hipótese ou modelo de regressão
+  
+A análise deve ser de apenas uma variável resposta e com pelo menos uma variável preditora (podem ser mais). Deve ser utilizado minimamente um teste de hipótese, mas idealmente um modelo de regressão. O modelo pode ser minimamente de apenas uma variável preditora, mas pode ser também um modelo múltiplo inclusive com efeitos mistos, tudo a depender do grau de segurança de cada um. 
+
+## Quais dados utilizar
+
+Os dados a serem utilizados podem ser:
+
+* `english` do pacote `languageR` (ou qualquer outro dado desse pacote. Após carregar o pacote, rode `data(package="languageR")`para ver a lista com descriçào dos dados disponíveis)
+* `vogalE` da Livia Oushiro
+* `covariaveis` da Livia Oushiro
+* Qualquer outro dado que você tenha (sua pesquisa atual ou pesquisa anterior)
+    + **Atenção!** Caso decida utilizar dados de pesquisa anterior, não copie seções da dissertação ou artigo, crie uma análise nos moldes aqui descritos.
+    
+A seguir demonstro um exemplo de uma análise mínima e de uma análise mais sofisticada dos mesmos dados, os dados `vogaisPB`, do Plinio Barbosa.
+
+**Observação**: utilizei o seguinte comando para substituir as vogais `E` e `O` por seus símbolos fonéticos `ɛ` e `ɔ`:
+
+```{r, eval=FALSE}
+remapping = c(i = "i", u = "u", a = "a", o = "o", e = "e", E = "ɛ", O = "ɔ")
+pb$vogal = remapping[as.character(pb$vogal)] 
+```
+
