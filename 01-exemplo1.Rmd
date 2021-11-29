@@ -1,0 +1,100 @@
+# Primeiro Exemplo
+
+O primeiro exemplo é do mínimo que pode ser feito, utilizando um teste de hipótese como análise.
+
+## Explicação dos dados
+
+Os dados utilizados nesta análise são dados das sete vogais orais tônicas do português do Brasil, coletadas por meio da gravação de palavras-alvo inseridas em frases-veículo lidas por um falante de São Paulo. As palavras eram dissílabas, paroxítonas, com a estrutura CV.CV; e a frase-guia utilizada foi "Digo *palavra* baixinho". Há 234 observações, entre 11 e 43 observações para cada vogal, e as variáveis são 'duração' (em milissegundos) e valor do primeiro formante (F1, em Hertz). A Tabela \@ref(tab:obs-vogal) apresenta a quantidade de observações por vogal.
+
+```{r obs-vogal, echo=FALSE}
+kable(table(pb$vogal), col.names = c("Vogal", "Observações"), caption = 'Quantidade de observações por vogal') %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+```
+
+As **perguntas de pesquisa** são:
+
+1. Há efeito de duração sobre as vogais? Isto é, vogais diferentes apresentam durações diferentes?
+2. Há efeito de F1 sobre as vogais? Isto é, vogais diferentes apresentam valores de F1 diferentes?
+
+As **hiopóteses** são:
+
+1. A altura das vogais é inversamente proporcional à duração, com vogais mais altas apresentam duração mais baixa e vice-versa.
+2. A altura das vogais é inversamente proporcional ao F1, com vogais mais altas apresentam F1 mais baixos e vice-versa.
+
+
+## Análise exploratória dos dados
+
+A tabela \@ref(fig:dados-descritivos) apresenta as médias, medianas e desvios-padrão da duração (em milissegundos) do primeiro formante (em Hertz) das vogais analisadas.
+
+```{r dados-descritivos, echo=FALSE, fig.cap='Dados descritivos: média, mediana e desvio-padrão da duração e de F1 por vogal'}
+datatable(
+  pb %>% 
+    group_by(vogal) %>% 
+    summarise(mediaDur = mean(dur),
+              medianaDur = median(dur),
+              desvioDur = sd(dur),
+              mediaF1 = mean(F1),
+              medianaF1 = median(F1),
+              desvioF1 = sd(F1))
+  ) %>% 
+  formatRound(columns=c("mediaDur", "medianaDur", "desvioDur",
+                        "mediaF1", "medianaF1", "desvioF1"), 
+              digits=1)
+```
+
+A menor média de duração foi da vogal /i/, com 87ms, seguida da vogal /u/, com média de 89ms. Esse resultado está alinhado com a literatura, já que vogais altas tendem a ser mais breves do que vogais baixas. A maior média de duração foi da vogal /o/ seguida da vogal /a/, com 119 e 111 milissegundos respectivamente.
+
+O gráfico de caixas \@ref(fig:boxplot-dur) e \@ref(fig:boxplot-F1) a seguir apresenta as vogais em ordem crescente das medianas de duração.
+
+```{r boxplot-dur, echo=FALSE, message=FALSE, fig.cap='Gráficos de caixas com duração por vogal'}
+ggplot(pb, aes(x = fct_reorder(vogal, dur), y = dur)) +
+  geom_boxplot() +
+  stat_summary(color = "blue") +
+  labs(y = "Duração", x = "Vogal") +
+  theme_classic()
+```
+
+```{r boxplot-F1, echo=FALSE, message=FALSE, fig.cap='Gráfico de caixas com valores de F1 por vogal'}
+ggplot(pb, aes(x = fct_reorder(vogal, F1), y = F1)) +
+  geom_boxplot() +
+  stat_summary(color = "blue") +
+  labs(y = "F1", x = "Vogal") +
+  theme_classic()
+```
+
+
+O primeiro formante (F1) é um correlato acústico que correponde à altura da língua, com vogais mais altas exibindo valores menores de F1, e vogais mais baixas apresentando valores mais altos de F1. Os dados analisados apresentaram essa tendência, com as vogais altas /i/ e /u/ apresentando os menos valores de F1, e a vogal baixa /a/ apresentando os valores mais altos.
+
+O gráfico \@ref(fig:boxplot-F1-filtered) apresenta as vogais em função dos valores de F1, em ordem crescente dos valores de F1. Com a plotagem é possível verificar que há dois erros de medição no F1 da vogal /i/, umas vez que valores acima de 900 Hz para F1 não são possíveis. Sendo assim, esses dois dados foram excluídos de toda a análise que segue. O gréfico de caixas seguinte apresenta os dados sem esses dois dados.
+
+```{r boxplot-F1-filtered, message=FALSE, echo=FALSE, fig.cap='Gráfico de caixas de F1 por vogal sem os dados extremos (erros de medição)'}
+pb = pb %>% 
+  filter(F1 < 900)
+
+ggplot(pb, aes(x = fct_reorder(vogal, F1), y = F1)) +
+  geom_boxplot() +
+  stat_summary(color = "blue") +
+  labs(y = "F1", x = "Vogal") +
+  theme_classic()
+```
+
+## Análise inferencial dos dados
+
+```{r, include=FALSE}
+anovaDur = aov(dur ~ vogal, data = pb)
+summary(anovaDur)
+
+TukeyHSD(anovaDur)
+
+anovaF1 = aov(F1 ~ vogal, data = pb)
+summary(anovaF1)
+
+TukeyHSD(anovaF1)
+```
+
+Para a análise fora condiziadas duas análises de variância (ANOVA), uma com duraçã em função das vogais e outra com F1 em função das vogais.
+
+A ANOVA da duração apresentou diferença significativa ($f(6) = 4,5; p<0,001$), o teste pareado pós-hoc (Tukey) apresentou difenreça entre /i/ e /o ɔ a/, e entre /u/ e /ɔ a/, ou seja, entre as duas vogais altas e, pelo menos, a baica e uma média-baixa. Sendo assim, nossa hipótese fica parcialmente confirmada.
+
+
+A ANOVA da duração apresentou diferença significativa ($f(6) = 501; p<0,001$), o teste pareado pós-hoc (Tukey) apresentou difenreça entre todas as vogais, com exceção de /ɛ ɔ/ e /u i/, que são pares de mesma altura, médias-baixas e altas, respectivamente. Sendo assim, nossa hipótese fica totalmente confirmada.
