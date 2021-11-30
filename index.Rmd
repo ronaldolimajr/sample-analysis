@@ -48,7 +48,7 @@ knitr::write_bib(c(
 
 # Sobre a Análise de Dados
 
-A análise a ser apresentada é como se fosse a seção "Resultados" de um artigo no formato "Introdução", "Método", **"Resultados"**, "Discussão" e "Conclusão".
+A análise a ser apresentada é como se fosse a seção "Resultados" de um artigo no formato "Introdução", "Método", **"Resultados"**, "Discussão" e "Conclusão".  Caso queira, confira estes dois exemplos de artigos com essa estrutura: [Arantes, P. & R. M. Lima Jr. (2021)](https://cadernos.abralin.org/index.php/cadernos/article/view/577){:target="_blank"} e [Teixeira, L. A. S. & R. M. Lima Jr. (2021)](https://revistas.ufpr.br/revistax/article/view/81413){:target="_blank"}
 
 A análise deve ser entregue em arquivo **PDF**.
 
