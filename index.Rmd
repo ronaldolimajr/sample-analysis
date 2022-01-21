@@ -70,9 +70,19 @@ A análise deve ser de apenas uma variável resposta e com pelo menos uma variá
 
 Os dados a serem utilizados podem ser:
 
-* `english` do pacote `languageR` (ou qualquer outro dado desse pacote. Após carregar o pacote, rode `data(package="languageR")`para ver a lista com descriçào dos dados disponíveis)
 * `vogalE` da Livia Oushiro
 * `covariaveis` da Livia Oushiro
+* Qualquer dado do pacote `languageR` (Após carregar o pacote, rode `data(package="languageR")`para ver a lista com descriçào dos dados disponíveis, ou acesse a documentação do [pacote](https://cran.r-project.org/web/packages/languageR/languageR.pdf){:target="_blank"} para ler sobre os conjuntos de dados). Algumas sugestões:
+    + `data(danish)` -- Auditory lexical decision latencies for Danish complex words.
+    + `data(dative)` -- Data describing the realization of the dative as NP or PP in the Switchboard corpus and the Treebank Wall Street Journal collection.
+    + `data(durationsGe)` -- Durational measurements on the Dutch preﬁx ge- in the Spoken Dutch Corpus.
+    + `data(durationsOnt)` -- Durational measurements on the Dutch preﬁx ont- in the Spoken Dutch Corpus.
+    + `data(etymology)` -- Estimated etymological age for regular and irregular monomorphemic Dutch verbs, together with other distributional predictors of regularity.
+    + `data(finalDevoicing)` -- Phonological speciﬁcations for onset, nucleus and offset for 1697 Dutch monomorphemic words with a ﬁnal obstruent. These ﬁnal obstruents may exhibit a voicing alternation that is traditionally described as syllable-ﬁnal devoicing: underlying /d/ in /hond/ becomes a /t/ when syllable-ﬁnal ([hOnt]) and remains a /d/ otherwise ([hOn-den]).
+    + `data(imaging)` -- Filtered fMRI signal at the most signiﬁcant voxel and average priming scores for brain-damaged patients, in a study addressing the extent to which phonological and semantic processes recruit the same brain areas.
+    + `data(lexdec)` -- Lexical decision latencies elicited from 21 subjects for 79 English concrete (nouns, with variables linked to subject or word).
+    + `data(primingHeid)` -- Primed lexical decision latencies for Dutch neologisms ending in the sufﬁx -heid.
+    + `data(regularity)` -- Regular and irregular Dutch verbs and selected lexical and distributional properties.
 * Qualquer outro dado que você tenha (sua pesquisa atual ou pesquisa anterior)
     + **Atenção!** Caso decida utilizar dados de pesquisa anterior, não copie seções da dissertação ou artigo, crie uma análise nos moldes aqui descritos.
     
